@@ -4,8 +4,8 @@ import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 
 import connectMongo from '../utils/connectMongo'
-import Test from '../models/testModel'
-// import Article_model from '../Models/articleModel'
+// import Test from '../models/testModel'
+import Article_model from '../Models/articleModel'
 
 
 import { useEffect, useState } from 'react'
@@ -16,10 +16,8 @@ export default function Home({articles}) {
 
 
 const [articleList, setArticleList] = useState([])
+console.log(articles);
 
-useEffect(() => {
-  setArticleList(articles)
-}, [])
 
 
   return (
@@ -34,9 +32,9 @@ useEffect(() => {
         <h1>LE BLOG</h1>
         <p>Ceci est un blog</p>
 
-    {articleList.map((item, index) => (
+    {articles.map((item, index) => (
       <div key={index} >
-        <h1> {item.name} </h1>
+        <h1> {item.title} </h1>
         <Link href={`${item._id}`} >Page</Link>
       </div>
     ))}
@@ -54,7 +52,7 @@ export const getServerSideProps = async () => {
     await connectMongo();
   
     console.log("mongo connected");
-    const articles = await Test.find()
+    const articles = await Article_model.find()
     console.log('data fetched');
 
     return {
