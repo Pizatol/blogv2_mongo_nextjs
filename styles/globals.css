@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: var(--violet4);
 }
 
 a {
@@ -13,4 +14,60 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+
+
+:root {
+  --DM : 'DM Sans', sans-serif;
+  --Garamond : 'EB Garamond', serif;
+  --Roboto  : 'Roboto Mono', monospace;
+  --Montserrat : 'Montserrat', sans-serif;
+  --Amaranth : 'Amaranth', sans-serif;
+
+  --size0 : 15px;
+  --size1 : 20px;
+  --size2 : 30px;
+  --size3 : 40px;
+  --size4 : 60px;
+
+
+  --width1 : 1000px;
+  --maxWidth1 : 1800px; 
+  --maxWidth2 : 1275px;
+
+  --dark0 : #0F0F0F;
+  --dark1 : #2f2f2f;
+  --dark2 : #4c4c4c ;
+  --grey1 : #a19da0;
+  --grey2 : #c8c8c8 ;
+  --white1 : #F1F1F1;
+  --white2 : #F2F2F2; 
+  
+  --blue1  : #4285f4;
+  --blue1Dark  : #3875d8;
+  --blue2 : #6a6ae9 ;
+  --blue3 : #3f51b5;
+
+
+  --violet1 : #731E9E ;
+  --violet2 : #8823A7;
+  --violet3 : #9C27B0  ; 
+  --violet4 : #4A148C ; 
+   
+
+
+  --red1 : #ff5d5d;  
+  --redDark1 : #c62828;  
+  --red1Light : #fb7575;
+  --yellow1 : #ffc107;
+  --yellowShallow : #ffc107af;
+
+  --orange : #fb8c00  ;
+  --orangeDark : #f57c00 ; 
+  
+
+
+  --transition1 : all 0.3s ease:
+
 }

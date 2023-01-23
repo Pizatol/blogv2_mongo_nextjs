@@ -1,0 +1,15 @@
+.global_container {
+  max-width: 80%;
+  width: 100%;
+  height: auto;
+ flex: 1;
+  margin:  auto;
+  
+}
+
+.card_container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+
+}

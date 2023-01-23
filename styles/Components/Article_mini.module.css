@@ -1,0 +1,44 @@
+.global_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 550px;
+  height: 350px;
+  background-color: var(--violet4);
+  border: 1px solid var(--white1);
+  border-radius: 20px;
+  margin: 10px;
+  transition: all 0.2s ease;
+}
+
+.global_container:hover {
+  outline: 1px solid var(--white1);
+  box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+}
+
+.right_part_card {
+  padding: 20px;
+  font-family: var(--Montserrat);
+  color: var(--white1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+.right_part_card h2 {
+  font-size: var(--size2);
+  font-weight: 600;
+}
+.right_part_card h3 {
+  width: 100%;
+  font-size: var(--size1);
+  color: var(--white1);
+  margin-bottom: 50px;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.buttons_container {
+  display: flex;
+}/*# sourceMappingURL=Article_mini.module.css.map */
