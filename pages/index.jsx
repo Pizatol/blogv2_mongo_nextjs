@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 
 export default function Home({ articles }) {
     const [articleList, setArticleList] = useState([]);
-    console.log(articles);
+    
 
     return (
         <div className={css.global_container}>

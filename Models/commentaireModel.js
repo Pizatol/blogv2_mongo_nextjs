@@ -1,5 +1,5 @@
 
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const { Schema, model, models } = mongoose;
 
 
@@ -32,6 +32,6 @@ const CommentarySchema = new Schema({
 });
 
 
-const CommentaryModel = models.CommentaryModel || model("Commentaires", CommentarySchema);
+const Commentaires = models.Commentaires || model("Commentaires", CommentarySchema);
 
-export default CommentaryModel
+export default Commentaires
