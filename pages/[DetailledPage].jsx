@@ -3,12 +3,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import css from "../styles/Pages/DetailledArticle.module.scss";
 import Image from "next/image";
+import img from "../public/assets/images/2.jpg";
 import connectMongo from "../utils/connectMongo";
 import Articles from "../Models/articleModel";
 import Commentaires from "../Models/commentaireModel";
 import { LoginContext } from "../context/LoginContext";
 import ReactMarkdown from "react-markdown";
-import img from "../public/assets/images/2.jpg";
+import CodeCopyBtn from "../Components/CodeCopyBtn";
+
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+
 export default function DetailledPage({ articles, commentaires }) {
     const { user } = useContext(LoginContext);
     const router = useRouter();
@@ -26,14 +31,14 @@ export default function DetailledPage({ articles, commentaires }) {
         );
 
         setCommentaireSlug(Object.values(newArrCom));
-
-        // console.log("COMM", commentaires[0].articleID);
-
-
-       
     }, [setCommentaireSlug, setArticle, article]);
 
-    const handle_delete_article = async () => {};
+    const Pre = ({ children }) => (
+        <pre className={css.blog_pre}>
+            <CodeCopyBtn>{children}</CodeCopyBtn>
+            {children}
+        </pre>
+    );
 
     return (
         <div>
@@ -77,6 +82,34 @@ export default function DetailledPage({ articles, commentaires }) {
                     <ReactMarkdown
                         children={article.text}
                         className={css.markdown}
+                        components={{
+                            pre: Pre,
+                            code({
+                                node,
+                                inline,
+                                className = "blog-code",
+                                children,
+                                ...props
+                            }) {
+                                const match = /language-(\w+)/.exec(
+                                    className || ""
+                                );
+                                return !inline && match ? (
+                                    <SyntaxHighlighter
+                                        style={a11yDark}
+                                        language={match[1]}
+                                        PreTag="div"
+                                        {...props}
+                                    >
+                                        {String(children).replace(/\n$/, "")}
+                                    </SyntaxHighlighter>
+                                ) : (
+                                    <code className={className} {...props}>
+                                        {children}
+                                    </code>
+                                );
+                            },
+                        }}
                     />
                     <p></p>
                 </div>
@@ -110,15 +143,15 @@ export default function DetailledPage({ articles, commentaires }) {
                 </div>
             </div>
 
-
-                       {commentaireSlug.length > 0 ? (
-                        <div>
-                            {commentaireSlug.map((item, index) => (
-                                <h1 key={index} > {item.commentaryText} </h1>
-                            ) )}
-                        </div>
-                       ) : ""}
-
+            {commentaireSlug.length > 0 ? (
+                <div>
+                    {commentaireSlug.map((item, index) => (
+                        <h1 key={index}> {item.commentaryText} </h1>
+                    ))}
+                </div>
+            ) : (
+                ""
+            )}
         </div>
     );
 }
