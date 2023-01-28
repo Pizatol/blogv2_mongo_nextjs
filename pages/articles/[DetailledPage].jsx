@@ -33,34 +33,35 @@ export default function DetailledPage({ articles }) {
     useEffect(() => {
         // const newArr = articles.filter((item) => item._id === slugID[0]);
         setArticle(articles);
-      
-      
-      
-
-   
-    }, [ setArticle, article]);
+    }, [setArticle, article]);
 
     const deleteData = async () => {
-        // for (img of article.image) {
-        //     const imgRef = ref(storage, `images/${img.name}`);
-        //     deleteObject(imgRef)
-        //         .then(() => {
-        //             // File deleted successfully
-        //             console.log("image deleted");
-        //         })
-        //         .catch((error) => {
-        //             // Uh-oh, an error occurred!
-        //             console.log(error.message);
-        //         });
-        // }
-        const res = await fetch("/api/DeleteArticle/delete", {
-            method: "Delete",
-         
-            body: JSON.stringify({
-                id: article._id,
-            }),
-        });
-       
+        for (img of article.image) {
+            const imgRef = ref(storage, `images/${img.name}`);
+            deleteObject(imgRef)
+                .then(() => {
+                    // File deleted successfully
+                    console.log("image deleted");
+                })
+                .catch((error) => {
+                    // Uh-oh, an error occurred!
+                    console.log(error.message);
+                });
+        }
+
+        const articleID = router.query.DetailledPage;
+
+        try {
+            await fetch(`/api/DeleteArticle/${articleID}`, {
+                method: "Delete",
+            });
+
+            router.push("/");
+        } catch (error) {
+            console.log(error);
+        }
+
+   
     };
 
     return (
@@ -177,22 +178,20 @@ export default function DetailledPage({ articles }) {
     );
 }
 
-export const getServerSideProps = async ({params}) => {
-
+export const getServerSideProps = async ({ params }) => {
     console.log("PARAMS", params.DetailledPage);
-    const id = params.DetailledPage
+    const id = params.DetailledPage;
     try {
         await connectMongo();
 
         console.log("mongo connected");
         const articles = await Articles.findById(id);
-        
+
         console.log("data fetched");
 
         return {
             props: {
                 articles: JSON.parse(JSON.stringify(articles)),
-               
             },
         };
     } catch (error) {

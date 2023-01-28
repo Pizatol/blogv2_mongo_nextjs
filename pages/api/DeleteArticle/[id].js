@@ -2,20 +2,34 @@ import connectMongo from "../../../utils/connectMongo";
 import Articles from "../../../Models/articleModel";
 
 export default async function Delete(req, res) {
-    try {
-        console.log("CONNECTING TO MONGO");
-        await connectMongo();
-        console.log("CONNECTED TO MONGO");
+    const {
+        query: { id },
+        method,
+    } = req;
+    console.log("OK 1");
+    await connectMongo();
 
-        console.log("DELETING DOCUMENT");
-        // const article = await Articles.deleteOne({ id: req.body });
-        console.log("DELETED DOCUMENT");
-        res.send('OK LES LOULOUS')
-       
-    } catch (error) {
-        console.log(error);
-        res.json({ error });
+    switch (method) {
+        case "DELETE":
+            try {
+               
+                const deletedArticle = await Articles.deleteOne({ _id: id });
+             
+                if (!deletedArticle) {
+                    return res.status(400).json({ success: false });
+                }
+                res.status(200).json({ success: true, data: {} });
+            } catch (error) {
+                console.log(error.message);
+            }
+
+            break;
+
+        default:
+            break;
     }
+
+   
 }
 
 // http://localhost:3000/api/DeleteArticle/delete
