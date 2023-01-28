@@ -3,15 +3,19 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import connectMongo from "../utils/connectMongo";
+import { LoginContext } from "../context/LoginContext";
 import css from "../styles/Pages/Index.module.scss";
+
 // import Test from '../models/testModel'
 import Article_model from "../Models/articleModel";
 
 import Article_mini from "../Components/Article_mini";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 export default function Home({ articles }) {
+    const { user } =
+    useContext(LoginContext);
     const [articleList, setArticleList] = useState([]);
     
 
@@ -25,6 +29,14 @@ export default function Home({ articles }) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+
+            {user ? (
+                <div>
+                    <Link href={"/NewArticle"} >
+                        <button> New Article</button>
+                    </Link>
+                </div>
+            ) : ''}
 
             <div className={css.card_container}>
                 {articles.map((item, index) => (
@@ -53,7 +65,7 @@ export const getServerSideProps = async () => {
 
         console.log("mongo connected");
         const articles = await Article_model.find();
-        console.log("data fetched");
+       
 
         return {
             props: {

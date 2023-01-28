@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import LoginForm from '../Components/LoginForm'
 import { LoginContext } from '../context/LoginContext'
 import NavBar from '../Components/NavBar'
+import "../styles/vscode_highlight.css"
 
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

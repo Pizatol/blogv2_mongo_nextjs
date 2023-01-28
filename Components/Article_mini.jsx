@@ -66,7 +66,7 @@ export default function Article_mini({
                 <h2> {title} </h2>
                 <h3> {description} </h3>
                 <div className={css.buttons_container}>
-                    <Link href={`/${id}`}>
+                    <Link href={`/articles/${id}`}>
                         <Button_readMore />
                     </Link>
                    

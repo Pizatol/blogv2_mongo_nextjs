@@ -1,47 +1,73 @@
 import React, { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import css from "../styles/Pages/DetailledArticle.module.scss";
+import css from "../../styles/Pages/DetailledArticle.module.scss";
 import Image from "next/image";
-import img from "../public/assets/images/2.jpg";
-import connectMongo from "../utils/connectMongo";
-import Articles from "../Models/articleModel";
-import Commentaires from "../Models/commentaireModel";
-import { LoginContext } from "../context/LoginContext";
+import img from "../../public/assets/images/2.jpg";
+import connectMongo from "../../utils/connectMongo";
+import Articles from "../../Models/articleModel";
+// import Commentaires from "../../Models/commentaireModel";
+import { LoginContext } from "../../context/LoginContext";
 import ReactMarkdown from "react-markdown";
-import CodeCopyBtn from "../Components/CodeCopyBtn";
+import CodeCopyBtn from "../../Components/CodeCopyBtn";
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    listAll,
+    list,
+    deleteObject,
+} from "firebase/storage";
+import { storage } from "../../Firebase/FirebaseConfig";
 
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { a11yDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { Prism } from "prismjs";
 
-export default function DetailledPage({ articles, commentaires }) {
+export default function DetailledPage({ articles }) {
     const { user } = useContext(LoginContext);
     const router = useRouter();
     const slugID = Object.values(router.query);
     const [loading, setLoading] = useState(false);
     const [article, setArticle] = useState({});
-    const [commentaireSlug, setCommentaireSlug] = useState([]);
+    // const [commentaireSlug, setCommentaireSlug] = useState([]);
 
     useEffect(() => {
-        const newArr = articles.filter((item) => item._id === slugID[0]);
-        setArticle(newArr[0]);
+        // const newArr = articles.filter((item) => item._id === slugID[0]);
+        setArticle(articles);
+      
+      
+      
 
-        const newArrCom = commentaires.filter(
-            (item) => item.articleID == slugID[0]
-        );
+   
+    }, [ setArticle, article]);
 
-        setCommentaireSlug(Object.values(newArrCom));
-    }, [setCommentaireSlug, setArticle, article]);
-
-    const Pre = ({ children }) => (
-        <pre className={css.blog_pre}>
-            <CodeCopyBtn>{children}</CodeCopyBtn>
-            {children}
-        </pre>
-    );
+    const deleteData = async () => {
+        // for (img of article.image) {
+        //     const imgRef = ref(storage, `images/${img.name}`);
+        //     deleteObject(imgRef)
+        //         .then(() => {
+        //             // File deleted successfully
+        //             console.log("image deleted");
+        //         })
+        //         .catch((error) => {
+        //             // Uh-oh, an error occurred!
+        //             console.log(error.message);
+        //         });
+        // }
+        const res = await fetch("/api/DeleteArticle/delete", {
+            method: "Delete",
+         
+            body: JSON.stringify({
+                id: article._id,
+            }),
+        });
+       
+    };
 
     return (
         <div>
+            <Link href={"/"}>
+                <button>Retour</button>
+            </Link>
             <div className={css.global_container}>
                 <div className={css.image_container_upper}>
                     {loading === true &&
@@ -65,7 +91,7 @@ export default function DetailledPage({ articles, commentaires }) {
                 </div>
                 {user ? (
                     <div>
-                        <button> delete</button>
+                        <button onClick={deleteData}> delete</button>
                     </div>
                 ) : (
                     ""
@@ -82,34 +108,29 @@ export default function DetailledPage({ articles, commentaires }) {
                     <ReactMarkdown
                         children={article.text}
                         className={css.markdown}
-                        components={{
-                            pre: Pre,
-                            code({
-                                node,
-                                inline,
-                                className = "blog-code",
-                                children,
-                                ...props
-                            }) {
-                                const match = /language-(\w+)/.exec(
-                                    className || ""
-                                );
-                                return !inline && match ? (
-                                    <SyntaxHighlighter
-                                        style={a11yDark}
-                                        language={match[1]}
-                                        PreTag="div"
-                                        {...props}
-                                    >
-                                        {String(children).replace(/\n$/, "")}
-                                    </SyntaxHighlighter>
-                                ) : (
-                                    <code className={className} {...props}>
-                                        {children}
-                                    </code>
-                                );
-                            },
-                        }}
+                        // components={{
+                        //     code({
+                        //         node,
+                        //         inline,
+                        //         className,
+                        //         children,
+                        //         ...props
+                        //     }) {
+                        //         return (
+                        //             <SyntaxHighlighter
+                        //                 children={String(children).replace(
+                        //                     /\n$/,
+                        //                     ""
+                        //                 )}
+                        //                 style={dark}
+
+                        //                 PreTag="div"
+                        //                 {...props}
+                        //             />
+
+                        //         );
+                        //     },
+                        // }}
                     />
                     <p></p>
                 </div>
@@ -143,7 +164,7 @@ export default function DetailledPage({ articles, commentaires }) {
                 </div>
             </div>
 
-            {commentaireSlug.length > 0 ? (
+            {/* {commentaireSlug.length > 0 ? (
                 <div>
                     {commentaireSlug.map((item, index) => (
                         <h1 key={index}> {item.commentaryText} </h1>
@@ -151,24 +172,27 @@ export default function DetailledPage({ articles, commentaires }) {
                 </div>
             ) : (
                 ""
-            )}
+            )} */}
         </div>
     );
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({params}) => {
+
+    console.log("PARAMS", params.DetailledPage);
+    const id = params.DetailledPage
     try {
         await connectMongo();
 
         console.log("mongo connected");
-        const articles = await Articles.find();
-        const commentaires = await Commentaires.find();
+        const articles = await Articles.findById(id);
+        
         console.log("data fetched");
 
         return {
             props: {
                 articles: JSON.parse(JSON.stringify(articles)),
-                commentaires: JSON.parse(JSON.stringify(commentaires)),
+               
             },
         };
     } catch (error) {
