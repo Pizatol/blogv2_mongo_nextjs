@@ -7,12 +7,26 @@ import AddArticle from "../Components/AddArticle";
 import Link from "next/link";
 import Button_transparent from "../Components/Buttons/Button_transparent";
 
-export default function NewArticle() {
+
+export default function NewArticle({ articles }) {
     const { user, setUser, formOn, setFormOn, userName, setUserName } =
         useContext(LoginContext);
     FirebaseAuthService.subscribeToAuthChanges(setUser);
 
     const router = useRouter();
+    const query = router.query.id;
+   
+
+    if(query){
+        const fecthing = async () => {
+            await connectMongo()
+
+            const data = await Articles.findById(query.id).exec()
+            console.log(data);
+        }
+    }
+
+    console.log(query);
 
     useEffect(() => {
         user ? "" : router.push("/");
@@ -31,3 +45,23 @@ export default function NewArticle() {
         </div>
     );
 }
+
+// export const getServerSideProps = async ({ id }) => {
+//     console.log(id);
+//     try {
+//         await connectMongo();
+
+//         console.log("mongo connected");
+//         const articles = await Articles.findById(id);
+
+//         console.log("data fetched");
+
+//         return {
+//             props: {
+//                 articles: JSON.parse(JSON.stringify(articles)),
+//             },
+//         };
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// };

@@ -21,7 +21,7 @@ import {
 import { storage } from "../Firebase/FirebaseConfig";
 // import Articles from "../Models/articleModel";
 
-export default function AddArticle() {
+export default function AddArticle({ data }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [text, setText] = useState("");
@@ -31,59 +31,96 @@ export default function AddArticle() {
 
     const [imageUpload, setImageUpload] = useState([]);
     const [imageUrls, setImageUrls] = useState([]);
+    const [commentaryID, setCommentaryID] = useState("");
     // const [tempoDisplayImages, setTempoDisplayImages] = useState([]);
 
+    console.log(data.id);
+    useEffect(() => {
+        setTitle(data.title);
+        setDescription(data.description);
+        setText(data.text);
+        setDate(data.date);
+        setAuthor(data.author);
+        setImageUpload(data.images.url);
+        setCommentaryID(data.commentaryID);
+    }, []);
     // **********************
 
     const imagesListRef = ref(storage, "images/");
     const router = useRouter();
 
-    const createData = async (e) => {
+    //  const createData = async (e) => {
+    //      e.preventDefault();
+    //      try {
+    //          const time = formattedDateWithSeconds();
+    //          const commentaryID = v4();
+
+    //          const res = await fetch("/api/AddArticle/add", {
+    //              method: "POST",
+    //              headers: {
+    //                  "Content-Type": "application/json",
+    //              },
+    //              body: JSON.stringify({
+    //                  description: description,
+    //                  title: title,
+    //                  text: text,
+    //                  date: time,
+    //                  author: author,
+    //                  commentaryID: commentaryID,
+    //                  image: imageUrls,
+    //              }),
+    //          });
+    //          const data = await res.json();
+    //          console.log(data);
+    //          try {
+    //              toast.success(`Article uploaded ! `, {
+    //                  autoClose: 2000,
+    //                  theme: "colored",
+    //                  closeOnClick: true,
+    //                  pauseOnHover: false,
+    //              });
+    //              setTitle("");
+    //              setAuthor("");
+    //              setDescription("");
+    //              setText("");
+    //              setDate(undefined);
+
+    //              setImageUrls([]);
+    //              setImageUpload([]);
+    //              router.push("/");
+    //          } catch (error) {
+    //              console.log(error);
+    //          }
+    //      } catch (error) {
+    //          console.log(error.message);
+    //      }
+    //  };
+
+    const editData = async (e) => {
         e.preventDefault();
+
+        const time = formattedDateWithSeconds();
+
+        const res = await fetch(`/api/handlerArticle/${data.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                description: description,
+                title: title,
+                text: text,
+                date: time,
+                author: author,
+                commentaryID: commentaryID,
+                image: imageUrls,
+            }),
+        });
+
+        router.push("/");
         try {
-            const time = formattedDateWithSeconds();
-            const commentaryID = v4();
-
-            const res = await fetch("/api/handlerArticle/id", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    description: description,
-                    title: title,
-                    text: text,
-                    date: time,
-                    author: author,
-                    commentaryID: commentaryID,
-                    image: imageUrls,
-                }),
-            });
-            const data = await res.json();
-            console.log(data);
-
-            
-            try {
-                toast.success(`Article uploaded ! `, {
-                    autoClose: 2000,
-                    theme: "colored",
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                });
-                setTitle("");
-                setAuthor("");
-                setDescription("");
-                setText("");
-                setDate(undefined);
-
-                setImageUrls([]);
-                setImageUpload([]);
-                router.push("/");
-            } catch (error) {
-                console.log(error);
-            }
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     };
 
@@ -93,8 +130,6 @@ export default function AddArticle() {
             return value;
         }
     };
-
-  
 
     return (
         <div>
@@ -143,11 +178,7 @@ export default function AddArticle() {
                     />
                 </div>
 
-                <Button_main
-                    name={"Submit"}
-                    color={"blue"}
-                    foo={(e) => createData(e)}
-                />
+                <Button_main name={"Edit"} color={"blue"} foo={editData} />
             </form>
         </div>
     );

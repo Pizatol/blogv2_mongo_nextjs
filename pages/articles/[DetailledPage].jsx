@@ -28,7 +28,10 @@ export default function DetailledPage({ articles }) {
     const slugID = Object.values(router.query);
     const [loading, setLoading] = useState(false);
     const [article, setArticle] = useState({});
-    // const [commentaireSlug, setCommentaireSlug] = useState([]);
+
+    // TEST ****************
+
+    // TEST ****************
 
     useEffect(() => {
         // const newArr = articles.filter((item) => item._id === slugID[0]);
@@ -60,8 +63,6 @@ export default function DetailledPage({ articles }) {
         } catch (error) {
             console.log(error);
         }
-
-   
     };
 
     return (
@@ -92,7 +93,15 @@ export default function DetailledPage({ articles }) {
                 </div>
                 {user ? (
                     <div>
-                        <button onClick={deleteData}> delete</button>
+                        {/* <button onClick={deleteData}> delete</button> */}
+                        <Link
+                            href={{
+                                pathname: `/EditPage/${article._id}`,
+                                query: { id: article._id },
+                            }}
+                        >
+                            <button>Edit</button>
+                        </Link>
                     </div>
                 ) : (
                     ""
@@ -109,29 +118,7 @@ export default function DetailledPage({ articles }) {
                     <ReactMarkdown
                         children={article.text}
                         className={css.markdown}
-                        // components={{
-                        //     code({
-                        //         node,
-                        //         inline,
-                        //         className,
-                        //         children,
-                        //         ...props
-                        //     }) {
-                        //         return (
-                        //             <SyntaxHighlighter
-                        //                 children={String(children).replace(
-                        //                     /\n$/,
-                        //                     ""
-                        //                 )}
-                        //                 style={dark}
-
-                        //                 PreTag="div"
-                        //                 {...props}
-                        //             />
-
-                        //         );
-                        //     },
-                        // }}
+                    
                     />
                     <p></p>
                 </div>
@@ -165,22 +152,16 @@ export default function DetailledPage({ articles }) {
                 </div>
             </div>
 
-            {/* {commentaireSlug.length > 0 ? (
-                <div>
-                    {commentaireSlug.map((item, index) => (
-                        <h1 key={index}> {item.commentaryText} </h1>
-                    ))}
-                </div>
-            ) : (
-                ""
-            )} */}
+            
         </div>
     );
 }
 
 export const getServerSideProps = async ({ params }) => {
-    console.log("PARAMS", params.DetailledPage);
+   
     const id = params.DetailledPage;
+    console.log("detailled page ID", id);
+
     try {
         await connectMongo();
 

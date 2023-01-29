@@ -32,7 +32,7 @@ export default function Home({ articles }) {
 
             {user ? (
                 <div>
-                    <Link href={"/NewArticle"} >
+                    <Link href={"/NewArticlePage"} >
                         <button> New Article</button>
                     </Link>
                 </div>
