@@ -55,7 +55,7 @@ export default function DetailledPage({ articles }) {
         const articleID = router.query.DetailledPage;
 
         try {
-            await fetch(`/api/DeleteArticle/${articleID}`, {
+            await fetch(`/api/handlerArticle/${articleID}`, {
                 method: "Delete",
             });
 
@@ -93,7 +93,7 @@ export default function DetailledPage({ articles }) {
                 </div>
                 {user ? (
                     <div>
-                        {/* <button onClick={deleteData}> delete</button> */}
+                        <button onClick={deleteData}> delete</button>
                         <Link
                             href={{
                                 pathname: `/EditPage/${article._id}`,

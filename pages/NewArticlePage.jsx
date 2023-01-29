@@ -46,22 +46,4 @@ export default function NewArticle({ articles }) {
     );
 }
 
-// export const getServerSideProps = async ({ id }) => {
-//     console.log(id);
-//     try {
-//         await connectMongo();
 
-//         console.log("mongo connected");
-//         const articles = await Articles.findById(id);
-
-//         console.log("data fetched");
-
-//         return {
-//             props: {
-//                 articles: JSON.parse(JSON.stringify(articles)),
-//             },
-//         };
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// };

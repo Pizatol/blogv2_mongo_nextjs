@@ -10,22 +10,22 @@ export default async function Delete(req, res) {
     await connectMongo();
 
     switch (method) {
-      case 'POST' :
-        try {
-          console.log('CONNECTING TO MONGO');
-          await connectMongo();
-          console.log('CONNECTED TO MONGO');
-          
-          console.log('CREATING DOCUMENT');
-          const article = await Articles.create(req.body);
-          console.log('CREATED DOCUMENT');
-          
-          res.json({ article });
-        } catch (error) {
-          console.log(error);
-          res.json({ error });
-        }
-        
+        case "POST":
+            try {
+                console.log("CONNECTING TO MONGO");
+                await connectMongo();
+                console.log("CONNECTED TO MONGO");
+
+                console.log("CREATING DOCUMENT");
+                const article = await Articles.create(req.body);
+                console.log("CREATED DOCUMENT");
+
+                res.json({ article });
+            } catch (error) {
+                console.log(error);
+                res.json({ error });
+            }
+
         case "DELETE":
             try {
                 const deletedArticle = await Articles.deleteOne({ _id: id });
@@ -40,20 +40,20 @@ export default async function Delete(req, res) {
 
             break;
 
-            case 'PUT' /* Edit a model by its ID */:
-                try {
-                  const article = await Articles.findByIdAndUpdate(id, req.body, {
+        case "PUT":
+            try {
+                const article = await Articles.findByIdAndUpdate(id, req.body, {
                     new: true,
                     runValidators: true,
-                  })
-                  if (!article) {
-                    return res.status(400).json({ success: false })
-                  }
-                  res.status(200).json({ success: true, data: pet })
-                } catch (error) {
-                  res.status(400).json({ success: false })
+                });
+                if (!article) {
+                    return res.status(400).json({ success: false });
                 }
-                break
+                res.status(200).json({ success: true, data: pet });
+            } catch (error) {
+                res.status(400).json({ success: false });
+            }
+            break;
 
         default:
             break;
