@@ -8,6 +8,7 @@ import connectMongo from "../../utils/connectMongo";
 import Articles from "../../Models/articleModel";
 // import Commentaires from "../../Models/commentaireModel";
 import { LoginContext } from "../../context/LoginContext";
+import Button_transparent from "../../Components/Buttons/Button_transparent";
 import ReactMarkdown from "react-markdown";
 import CodeCopyBtn from "../../Components/CodeCopyBtn";
 import {
@@ -20,7 +21,11 @@ import {
 } from "firebase/storage";
 import { storage } from "../../Firebase/FirebaseConfig";
 
-import { Prism } from "prismjs";
+// import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+
+import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/prism";
+import { materialDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { vs2015 } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 export default function DetailledPage({ articles }) {
     const { user } = useContext(LoginContext);
@@ -29,6 +34,7 @@ export default function DetailledPage({ articles }) {
     const [loading, setLoading] = useState(false);
     const [article, setArticle] = useState({});
 
+    const [languageCode, setLanguageCode] = useState('')
     // TEST ****************
 
     // TEST ****************
@@ -36,6 +42,7 @@ export default function DetailledPage({ articles }) {
     useEffect(() => {
         // const newArr = articles.filter((item) => item._id === slugID[0]);
         setArticle(articles);
+        setLanguageCode(article.author)
     }, [setArticle, article]);
 
     const deleteData = async () => {
@@ -66,10 +73,12 @@ export default function DetailledPage({ articles }) {
     };
 
     return (
-        <div>
-            <Link href={"/"}>
-                <button>Retour</button>
-            </Link>
+        <div className={css.global}>
+            <div>
+                <Link href={"/"}>
+                    <Button_transparent name={"Retour"} />
+                </Link>
+            </div>
             <div className={css.global_container}>
                 <div className={css.image_container_upper}>
                     {loading === true &&
@@ -115,12 +124,20 @@ export default function DetailledPage({ articles }) {
 
                     <h3 className={css.description}>{article.description}</h3>
 
-                    <ReactMarkdown
+                    {/* <ReactMarkdown>{article.text}</ReactMarkdown> */}
+
+                    <SyntaxHighlighter  
+                    language={languageCode}
+                     style={vs2015}
+                       >
+                    {article.text}
+                    </SyntaxHighlighter>
+
+                    {/* <ReactMarkdown
+                  
                         children={article.text}
                         className={css.markdown}
-                    
-                    />
-                    <p></p>
+                    /> */}
                 </div>
 
                 <div className={css.images_container}>
@@ -151,24 +168,17 @@ export default function DetailledPage({ articles }) {
                         : ""}
                 </div>
             </div>
-
-            
         </div>
     );
 }
 
 export const getServerSideProps = async ({ params }) => {
-   
     const id = params.DetailledPage;
-    console.log("detailled page ID", id);
 
     try {
         await connectMongo();
 
-        console.log("mongo connected");
         const articles = await Articles.findById(id);
-
-        console.log("data fetched");
 
         return {
             props: {

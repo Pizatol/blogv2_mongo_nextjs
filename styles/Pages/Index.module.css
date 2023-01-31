@@ -1,5 +1,5 @@
 .global_container {
-  max-width: 80%;
+  max-width: 1200px;
   width: 100%;
   height: auto;
   flex: 1;
