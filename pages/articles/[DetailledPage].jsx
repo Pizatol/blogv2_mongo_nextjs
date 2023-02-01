@@ -128,7 +128,7 @@ export default function DetailledPage({ articles }) {
 
                     <SyntaxHighlighter  
                     language={languageCode}
-                     style={vs2015}
+                     style={materialDark}
                        >
                     {article.text}
                     </SyntaxHighlighter>
