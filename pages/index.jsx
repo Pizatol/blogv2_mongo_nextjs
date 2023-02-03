@@ -38,7 +38,7 @@ export default function Home({ articles }) {
                 </div>
             ) : ''}
 
-            <div className={css.card_container}>
+            {/* <div className={css.card_container}>
                 {articles.map((item, index) => (
                     <div key={index} className={css.card_container}>
                         <Article_mini
@@ -54,25 +54,25 @@ export default function Home({ articles }) {
                        
                     </div>
                 ))}
-            </div>
+            </div> */}
         </div>
     );
 }
 
-export const getServerSideProps = async () => {
-    try {
-        await connectMongo();
+// export const getServerSideProps = async () => {
+//     try {
+//         await connectMongo();
 
-        console.log("mongo connected");
-        const articles = await Article_model.find();
+//         console.log("mongo connected");
+//         const articles = await Article_model.find();
        
 
-        return {
-            props: {
-                articles: JSON.parse(JSON.stringify(articles)),
-            },
-        };
-    } catch (error) {
-        console.log(error);
-    }
-};
+//         return {
+//             props: {
+//                 articles: JSON.parse(JSON.stringify(articles)),
+//             },
+//         };
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
