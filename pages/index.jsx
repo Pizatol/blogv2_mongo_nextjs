@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Image from "next/image";
+
 
 import Link from "next/link";
 import connectMongo from "../utils/connectMongo";
@@ -40,7 +40,7 @@ export default function Home({ articles }) {
 
                 <h1>COUCOU !</h1>
 
-            {/* <div className={css.card_container}>
+            <div className={css.card_container}>
                 {articles.map((item, index) => (
                     <div key={index} className={css.card_container}>
                         <Article_mini
@@ -56,25 +56,25 @@ export default function Home({ articles }) {
                        
                     </div>
                 ))}
-            </div> */}
+            </div>
         </div>
     );
 }
 
-// export const getServerSideProps = async () => {
-//     try {
-//         await connectMongo();
+export const getServerSideProps = async () => {
+    try {
+        await connectMongo();
 
-//         console.log("mongo connected");
-//         const articles = await Article_model.find();
+        console.log("mongo connected");
+        const articles = await Article_model.find();
        
 
-//         return {
-//             props: {
-//                 articles: JSON.parse(JSON.stringify(articles)),
-//             },
-//         };
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
+        return {
+            props: {
+                articles: JSON.parse(JSON.stringify(articles)),
+            },
+        };
+    } catch (error) {
+        console.log(error);
+    }
+};
