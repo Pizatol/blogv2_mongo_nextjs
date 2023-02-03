@@ -34,7 +34,7 @@ export default function DetailledPage({ articles }) {
     const [loading, setLoading] = useState(false);
     const [article, setArticle] = useState({});
 
-    const [languageCode, setLanguageCode] = useState('')
+    const [languageCode, setLanguageCode] = useState("");
     // TEST ****************
 
     // TEST ****************
@@ -42,8 +42,10 @@ export default function DetailledPage({ articles }) {
     useEffect(() => {
         // const newArr = articles.filter((item) => item._id === slugID[0]);
         setArticle(articles);
-        setLanguageCode(article.author)
+        setLanguageCode(article.author);
     }, [setArticle, article]);
+
+    console.log(languageCode);
 
     const deleteData = async () => {
         for (img of article.image) {
@@ -124,20 +126,16 @@ export default function DetailledPage({ articles }) {
 
                     <h3 className={css.description}>{article.description}</h3>
 
-                    {/* <ReactMarkdown>{article.text}</ReactMarkdown> */}
-
-                    <SyntaxHighlighter  
-                    language={languageCode}
-                     style={materialDark}
-                       >
-                    {article.text}
-                    </SyntaxHighlighter>
-
-                    {/* <ReactMarkdown
-                  
-                        children={article.text}
-                        className={css.markdown}
-                    /> */}
+                    {languageCode === "css" || languageCode === "javascript" ? (
+                        <SyntaxHighlighter
+                            language={languageCode}
+                            style={vs2015}
+                        >
+                            {article.text}
+                        </SyntaxHighlighter>
+                    ) : (
+                        <ReactMarkdown>{article.text}</ReactMarkdown>
+                    )}
                 </div>
 
                 <div className={css.images_container}>
