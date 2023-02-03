@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import css from "../../styles/Pages/DetailledArticle.module.scss";
 import Image from "next/image";
-import img from "../../public/assets/images/2.jpg";
+import img2 from "../../public/assets/images/2.jpg";
 import connectMongo from "../../utils/connectMongo";
 import Articles from "../../Models/articleModel";
 // import Commentaires from "../../Models/commentaireModel";
@@ -95,7 +95,7 @@ export default function DetailledPage({ articles }) {
                     ) : (
                         <Image
                             className={css.image_card}
-                            src={img}
+                            src={img2}
                             alt="image blog"
                             fill
                             loading="lazy"
