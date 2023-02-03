@@ -76,7 +76,8 @@ export default function DetailledPage({  }) {
 
     return (
         <div className={css.global}>
-        
+        <h2>ok</h2>
+
         <h1>COUCOU</h1>
 
             {/* <div>
