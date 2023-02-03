@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import css from "../styles/Components/AddArticle.module.scss";
-import Axios from "Axios";
+
 import Button_main from "./Buttons/Button_main";
 import Input_image from "./Input_image";
 import formattedDate from "./formattedDate";
