@@ -27,7 +27,7 @@ import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/prism";
 import { materialDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { vs2015 } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
-export default function DetailledPage({  }) {
+export default function DetailledPage({ articles }) {
     const { user } = useContext(LoginContext);
     const router = useRouter();
     const slugID = Object.values(router.query);
@@ -39,11 +39,10 @@ export default function DetailledPage({  }) {
 
     // TEST ****************
 
-    // useEffect(() => {
-       
-    //     setArticle(articles);
-    //     setLanguageCode(article.author);
-    // }, [setArticle, article]);
+    useEffect(() => {
+        setArticle(articles);
+        setLanguageCode(article.author);
+    }, [setArticle, article]);
 
     console.log(languageCode);
 
@@ -76,11 +75,7 @@ export default function DetailledPage({  }) {
 
     return (
         <div className={css.global}>
-        <h2>ok</h2>
-
-        <h1>COUCOU</h1>
-
-            {/* <div>
+            <div>
                 <Link href={"/"}>
                     <Button_transparent name={"Retour"} />
                 </Link>
@@ -169,25 +164,25 @@ export default function DetailledPage({  }) {
                           ))
                         : ""}
                 </div>
-            </div> */}
+            </div>
         </div>
     );
 }
 
-// export const getServerSideProps = async ({ params }) => {
-//     const id = params.DetailledPage;
+export const getServerSideProps = async ({ params }) => {
+    const id = params.DetailledPage;
 
-//     try {
-//         await connectMongo();
+    try {
+        await connectMongo();
 
-//         const articles = await Articles.findById(id);
+        const articles = await Articles.findById(id);
 
-//         return {
-//             props: {
-//                 articles: JSON.parse(JSON.stringify(articles)),
-//             },
-//         };
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// };
+        return {
+            props: {
+                articles: JSON.parse(JSON.stringify(articles)),
+            },
+        };
+    } catch (error) {
+        console.log(error.message);
+    }
+};
