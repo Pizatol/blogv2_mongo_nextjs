@@ -44,7 +44,6 @@ export default function DetailledPage({ articles }) {
         setLanguageCode(article.author);
     }, [setArticle, article]);
 
-    console.log(languageCode);
 
     const deleteData = async () => {
         for (img of article.image) {
@@ -172,6 +171,7 @@ export default function DetailledPage({ articles }) {
 export const getServerSideProps = async ({ params }) => {
     const id = params.DetailledPage;
 
+    console.log("ID", id)
     try {
         await connectMongo();
 
@@ -183,6 +183,7 @@ export const getServerSideProps = async ({ params }) => {
             },
         };
     } catch (error) {
-        console.log(error.message);
+        console.log(error.message, 'petit probleme');
+        
     }
 };

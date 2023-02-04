@@ -38,7 +38,6 @@ export default function Home({ articles }) {
                 </div>
             ) : ''}
 
-                <h1>COUCOU !</h1>
 
             <div className={css.card_container}>
                 {articles.map((item, index) => (
