@@ -180,6 +180,8 @@ export default function LoginForm() {
                                     >
                                         SIGN IN
                                     </button>
+                                   
+                                
                                 )}
                             </div>
                             <div>
@@ -221,7 +223,7 @@ export default function LoginForm() {
                                             </button>{" "}
                                         </p>
 
-                                        <p
+                                        {/* <p
                                             className={
                                                 css.login_form_reset_text
                                             }
@@ -236,7 +238,7 @@ export default function LoginForm() {
                                             >
                                                 Sign In
                                             </button>{" "}
-                                        </p>
+                                        </p> */}
                                     </div>
                                 )}
                             </div>
