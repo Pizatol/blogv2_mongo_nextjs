@@ -41,12 +41,11 @@ export default function DetailledPage({ articles }) {
 
     useEffect(() => {
         setArticle(articles);
-        setLanguageCode(article.author);
+        setLanguageCode(article.keyWord);
     }, [setArticle, article]);
 
-
     const deleteData = async () => {
-        for (img of article.image) {
+        for (let img of article.image) {
             const imgRef = ref(storage, `images/${img.name}`);
             deleteObject(imgRef)
                 .then(() => {
@@ -117,7 +116,7 @@ export default function DetailledPage({ articles }) {
                 )}
 
                 <div className={css.data_container}>
-                    <p>{article.author} </p>
+                   
                     <h4> {article.date}</h4>
 
                     <h1>{article.title} </h1>
@@ -171,7 +170,7 @@ export default function DetailledPage({ articles }) {
 export const getServerSideProps = async ({ params }) => {
     const id = params.DetailledPage;
 
-    console.log("ID", id)
+    console.log("ID", id);
     try {
         await connectMongo();
 
@@ -183,7 +182,6 @@ export const getServerSideProps = async ({ params }) => {
             },
         };
     } catch (error) {
-        console.log(error.message, 'petit probleme');
-        
+        console.log(error.message, "petit probleme");
     }
 };

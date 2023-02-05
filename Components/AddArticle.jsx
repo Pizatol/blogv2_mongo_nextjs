@@ -27,6 +27,7 @@ export default function AddArticle() {
     const [text, setText] = useState("");
     const [date, setDate] = useState(undefined);
     const [author, setAuthor] = useState("");
+    const [keyWord, setKeyWord] = useState('')
     const [articlesList, setArticlesList] = useState([]);
 
     const [imageUpload, setImageUpload] = useState([]);
@@ -54,7 +55,7 @@ export default function AddArticle() {
                     title: title,
                     text: text,
                     date: time,
-                    author: author,
+                    keyWord: keyWord,
                     commentaryID: commentaryID,
                     image: imageUrls,
                 }),
@@ -70,7 +71,7 @@ export default function AddArticle() {
                     pauseOnHover: false,
                 });
                 setTitle("");
-                setAuthor("");
+                setKeyWord("");
                 setDescription("");
                 setText("");
                 setDate(undefined);
@@ -102,9 +103,9 @@ export default function AddArticle() {
                 <div className={css.input}>
                     <label>Author</label>
                     <input
-                        onChange={(e) => setAuthor(e.target.value)}
+                        onChange={(e) => setKeyWord(e.target.value)}
                         type="text"
-                        value={author}
+                        value={keyWord}
                     />
                 </div>
                 <div className={css.input}>

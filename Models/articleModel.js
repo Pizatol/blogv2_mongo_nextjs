@@ -15,7 +15,7 @@ const ArticleSchema = new Schema({
     date: {
         type: String,
     },
-    author: {
+    keyWord: {
         type: String,
     },
     image: {

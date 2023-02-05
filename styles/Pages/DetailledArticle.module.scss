@@ -31,12 +31,19 @@
 .data_container {
     display: flex;
     flex-direction: column;
+    width: 100%;
     flex-wrap: wrap;
     padding: 20px 30px;
     font-family: var(--DM);
     font-size: var(--size1);
     font-weight: 500;
     line-height: 24px;
+   
+    align-items: center;
+    // text-align: left;
+    
+
+   
 }
 
 .images_container {
@@ -134,6 +141,9 @@
     //     color: var(--dark1);
     // }
 }
+// DESCRIPTION
+
+// COMMENTAIRES
 
 .commentary_section:focus-within {
     span {
@@ -149,9 +159,7 @@
     }
 }
 
-// DESCRIPTION
 
-// COMMENTAIRES
 
 .commentaries_container {
     max-width: 1200px;

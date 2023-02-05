@@ -8,7 +8,7 @@ export default function EditPage({ article }) {
     console.log(article);
     const data = {
         id: article._id,
-        author: article.author,
+        keyWord: article.keyWord,
         commentaryID: article.commentaryID,
         description: article.description,
         images: article.image,

@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
  const connectMongo = async () => {
 
-	const mongo_connection = 'mongodb+srv://Pizatol:NliQPeHlyWWCZhRS@cluster0.uwasos5.mongodb.net/Articles?retryWrites=true&w=majority'
+	const mongo_connection = process.env.MONGO_URI
 
 	mongoose.connect(mongo_connection)
 

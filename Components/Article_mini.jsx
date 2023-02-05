@@ -24,7 +24,8 @@ export default function Article_mini({
     description,
     text,
     id,
-    author,
+    
+    keyWord,
     date,
     image,
     allArticles,

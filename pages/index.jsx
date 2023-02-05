@@ -47,7 +47,7 @@ export default function Home({ articles }) {
                             description={item.description}
                             text={item.text}
                             id={item._id}
-                            author={item.author}
+                            keyWord={item.keyWord}
                             date={item.date}
                             image={item.image}
                             key={index}
