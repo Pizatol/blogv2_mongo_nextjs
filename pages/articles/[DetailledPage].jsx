@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import css from "../../styles/Pages/DetailledArticle.module.scss";
 import Image from "next/image";
 import img2 from "../../public/assets/images/2.jpg";
+import img1 from '../../public/assets/images/0.jpg'
 import connectMongo from "../../utils/connectMongo";
 import Articles from "../../Models/articleModel";
 // import Commentaires from "../../Models/commentaireModel";
@@ -92,7 +93,7 @@ export default function DetailledPage({ articles }) {
                     ) : (
                         <Image
                             className={css.image_card}
-                            src={img2}
+                            src={img1}
                             alt="image blog"
                             fill
                             loading="lazy"
@@ -170,7 +171,7 @@ export default function DetailledPage({ articles }) {
 export const getServerSideProps = async ({ params }) => {
     const id = params.DetailledPage;
 
-    console.log("ID", id);
+
     try {
         await connectMongo();
 
