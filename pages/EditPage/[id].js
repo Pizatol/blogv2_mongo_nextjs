@@ -5,7 +5,7 @@ import Articles from "../../Models/articleModel";
 import connectMongo from "../../utils/connectMongo";
 
 export default function EditPage({ article }) {
-    console.log(article);
+   
     const data = {
         id: article._id,
         keyWord: article.keyWord,
