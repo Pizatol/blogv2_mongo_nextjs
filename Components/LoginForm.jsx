@@ -104,7 +104,7 @@ export default function LoginForm() {
             toast.info("Your password has been reset !  ");
         } catch (error) {
             toast.error(` Email unknown !  `, {
-                autoClose: 2000,
+                autoClose: 1500,
                 theme: "colored",
                 closeOnClick: true,
                 pauseOnHover: false,
