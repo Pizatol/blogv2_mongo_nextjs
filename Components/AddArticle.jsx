@@ -101,7 +101,7 @@ export default function AddArticle() {
             <form className={css.form_container}>
                 <h2 className={css.title_form}>New Article</h2>
                 <div className={css.input}>
-                    <label>Author</label>
+                    <label>Key word</label>
                     <input
                         onChange={(e) => setKeyWord(e.target.value)}
                         type="text"
